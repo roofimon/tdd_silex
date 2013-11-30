@@ -4,7 +4,7 @@ require_once '../web/WineServicePDO.php';
 class WineServicePDOTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testGetWine()
+    public function testListWine()
     {
         $mockStatement = $this->getMock('PDOStatement', ['fetchAll']);
         $mockStatement->expects($this->once())->method('fetchAll');

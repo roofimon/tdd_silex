@@ -1,9 +1,11 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
+require_once 'WineServicePDO.php';
+require_once 'WineController.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$app = new Silex\Application(['debug' => true]);
+$app = new Silex\Application();
 
 function getConnection() {
   $dbhost="127.0.0.1";
@@ -14,15 +16,23 @@ function getConnection() {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
 }
-
+/*
 $app->get('/wines', function () use ($app) {
-  //$wines = "<b>First wine</b>";
+    $wineService = new WineServicePDO();
   try {
-    $wines = json_encode(listWine());
+    $wines = json_encode($wineService->listWine());
   } catch (Exception $e) {
     echo $e->getMessage();
   }
   return $wines;
+});
+*/
+
+$app->get('/wines', 'WineController::listWine');
+
+$app->get('/', function () use ($app) {
+    $wines = "<b>root </b>";
+    return $wines;
 });
 
 $app->get('/wines/{id}', function ($id) use ($app) {
@@ -41,18 +51,7 @@ $app->post('/wines', function (Request $request) use ($app) {
   return json_encode($data); 
 });
 
-function listWine() {
-  try {
-    $sql = "select * from wines";
-    $db = getConnection();
-    $stm = $db->query($sql);
-    $wines = $stm->fetchAll(PDO::FETCH_OBJ);
-    $db = null;
-    return $wines;
-  } catch (PDOException $e) {
-    echo $e->getMessage();
-  }
-}
+
 
 function addWine($data) {
   $properties = ['title', 'grapes', 'country', 'price'];
