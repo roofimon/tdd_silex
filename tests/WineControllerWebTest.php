@@ -21,12 +21,4 @@ class WineControllerTest extends WebTestCase{
 
         $this->assertTrue($client->getResponse()->isOk());
     }
-/*
-    public function testListWineWillReturnJSON () {
-        $expectedJSON = '{{},{}}';
-        $wineController = new WineController();
-        $wines = $wineController->listWine();
-        $this->assertEquals($expectedJSON,$wines);
-    }
-    */
 } 
