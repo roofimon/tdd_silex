@@ -1,6 +1,6 @@
 <?php
 
-class WineAPI {
+class WineServicePDO {
   public $dbh;
 
   function getConnection() {
