@@ -7,5 +7,7 @@
  */
 
 class Wine {
-
-} 
+    function getId() {
+        return 1;
+    }
+}
