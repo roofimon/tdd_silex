@@ -12,10 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
     function testListWine(){
-        $wineController =  new WineController();
+
+
         $mockServicePDO = $this->getMock('WineServicePDO', ['listWine']);
         $mockServicePDO->expects($this->once())->method('listWine');
-        $wineController->setWineService($mockServicePDO);
+        $appMock = array('wine_service_pdo'=>$mockServicePDO);
+        $wineController =  new WineController($appMock);
 
         $mockApplication = $this->getMock('Silex\Application');
         $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
