@@ -1,6 +1,7 @@
 <?php
 require_once '../web/WineServicePDO.php';
 require_once '../web/WineController.php';
+require_once '../web/Wine.php';
 /**
  * Created by PhpStorm.
  * User: roofimon
@@ -26,5 +27,28 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
 
         $actual_json = $wineController->listWine($mockRequest, $mockApplication);
         $this->assertEquals($expected_json, $actual_json);
+    }
+
+    function testAddWine(){
+
+        $mockServicePDO = $this->getMock('WineServicePDO', ['addWine']);
+        $mockServicePDO->expects($this->once())
+            ->method('addWine')
+            ->will($this->returnValue(new Wine(['title'=>'new wine'])));
+
+
+        $mockApplication = $this->getMock('Silex\Application');
+
+        $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request', ['get']);
+        $mockRequest->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue('new wine'));
+
+        $appMock = array('wine_service_pdo'=>$mockServicePDO);
+        $wineController =  new WineController($appMock);
+
+        $result = $wineController->addWine($mockRequest);
+
+        $this->assertEquals('{"success":"true"}', $result);
     }
 } 
