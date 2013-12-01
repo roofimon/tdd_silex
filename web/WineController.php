@@ -12,12 +12,19 @@ class WineController {
     private $service;
 
     public function __construct($app) {
-      $this->service = $app['wine_service_pdo'];
+        $this->service = $app['wine_service_pdo'];
     }
 
     public function listWine(Request $request, Application $app){
         $result = $this->service->listWine();
-        return "string";
+        return json_encode($result);
+    }
+
+    public function addWine(Request $request) {
+        $data = $request->get('title');
+        $wine = new Wine(['title' => $data]);
+        $this->service->addWine($wine);
+        return '{"success":"true"}';
     }
 
     function setWineService(WineServicePDO $service){

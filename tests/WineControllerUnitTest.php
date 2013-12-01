@@ -19,6 +19,7 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
         $mockServicePDO->expects($this->once())
             ->method('listWine')
             ->will($this->returnValue([['id'=>1, 'title'=>'wine a'], ['id'=>2, 'title'=>'some wine']]));
+
         $appMock = array('wine_service_pdo'=>$mockServicePDO);
         $wineController =  new WineController($appMock);
 
@@ -30,12 +31,10 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
     }
 
     function testAddWine(){
-
         $mockServicePDO = $this->getMock('WineServicePDO', ['addWine']);
         $mockServicePDO->expects($this->once())
             ->method('addWine')
             ->will($this->returnValue(new Wine(['title'=>'new wine'])));
-
 
         $mockApplication = $this->getMock('Silex\Application');
 
@@ -48,7 +47,6 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
         $wineController =  new WineController($appMock);
 
         $result = $wineController->addWine($mockRequest);
-
         $this->assertEquals('{"success":"true"}', $result);
     }
-} 
+}
