@@ -18,17 +18,15 @@ $app['wines.controller'] = $app->share(function() use ($app) {
     return new WineController($app);
 });
 
-$app->get('/wines', 'wines.controller:listWine');
-$app->post('/wines', 'wines.controller:addWine');
-
 $app->get('/', function () use ($app) {
     return '';
 });
 
-$app->get('/wines/{id}', function ($id) use ($app) {
-    $wines = "<b>First wine with id </b>".$id;
-    return $wines;
-});
+$app->get('/wines', 'wines.controller:listWine');
+
+$app->post('/wines', 'wines.controller:addWine');
+
+$app->get('/wines/{id}', 'wines.controller:getWine'); 
 
 $app->run();
 
