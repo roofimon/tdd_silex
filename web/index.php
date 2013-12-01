@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $app = new Silex\Application();
+$app['debug'] = true;
 
 function getConnection() {
   $dbhost="127.0.0.1";
@@ -28,7 +29,18 @@ $app->get('/wines', function () use ($app) {
 });
 */
 
-$app->get('/wines', 'WineController::listWine');
+$app->register(new Silex\Provider\ServiceControllerServiceProvider());
+
+$app['wine_service_pdo'] = $app->share(function() {
+  return new WineServicePDO();
+});
+
+$app['wines.controller'] = $app->share(function() use ($app) {
+    return new WineController($app);
+});
+
+
+$app->get('/wines', 'wines.controller:listWine');
 
 $app->get('/', function () use ($app) {
     $wines = "<b>root </b>";
@@ -48,7 +60,7 @@ $app->post('/wines', function (Request $request) use ($app) {
   //$wines = "<b>First wine with id </b>".$title."-".$grapes."-".$country."-".$price;
 
   addWine($data);
-  return json_encode($data); 
+  return json_encode($data);
 });
 
 

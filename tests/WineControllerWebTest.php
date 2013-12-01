@@ -21,4 +21,4 @@ class WineControllerTest extends WebTestCase{
 
         $this->assertTrue($client->getResponse()->isOk());
     }
-} 
+}
