@@ -20,6 +20,12 @@ class WineController {
         return json_encode($result);
     }
 
+    public function getWine(Request $request, Application $app){
+        $data = $request->get('id');
+        $target_wine = $this->service->getWine($data);
+        return json_encode($target_wine);
+    }
+
     public function addWine(Request $request) {
         $data = $request->get('title');
         $wine = new Wine(['title' => $data]);

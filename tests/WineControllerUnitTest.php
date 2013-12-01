@@ -30,6 +30,25 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected_json, $actual_json);
     }
 
+    function testGetWine(){
+        $expected_json = '{"id":1,"title":"target"}';
+        $mockServicePDO = $this->getMock('WineServicePDO', ['getWine']);
+        $mockServicePDO->expects($this->once())
+            ->method('getWine')
+            ->will($this->returnValue(['id'=>1, 'title'=>'target']));
+
+        $appMock = array('wine_service_pdo'=>$mockServicePDO);
+        $wineController =  new WineController($appMock);
+
+        $mockApplication = $this->getMock('Silex\Application');
+        $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $mockRequest->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(1));
+
+        $actual_json = $wineController->getWine($mockRequest, $mockApplication);
+        $this->assertEquals($expected_json, $actual_json);
+    }
     function testAddWine(){
         $mockServicePDO = $this->getMock('WineServicePDO', ['addWine']);
         $mockServicePDO->expects($this->once())
