@@ -1,4 +1,5 @@
 <?php
+require_once 'Wine.php';
 /**
  * Created by PhpStorm.
  * User: roofimon
