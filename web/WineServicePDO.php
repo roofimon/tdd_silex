@@ -16,60 +16,62 @@ class WineServicePDO {
   }
 
   function getConnection(){
-    $pdo = new PDO('sqlite::memory:');
-    //$pdo = new PDO('sqlite:./sqlite3/wines.sqlite3');
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo->exec("CREATE TABLE IF NOT EXISTS wines (
-      id INTEGER PRIMARY KEY AUTOINCREMENT, 
-      title TEXT, 
-      grapes TEXT, 
-      price INTEGER,
-      country TEXT,
-      region TEXT,
-      year TEXT,
-      note TEXT
-    )");
-    $wines = array(
-      array('title' => 'Hello!',
-      'grapes' => 'Just testing',
-      'price' => 100,
-      'country' => 'Australia',
-      'region' => 'Victoria',
-      'year' => '2010',
-      'note' => 'Note'),
-    );
+    if($this->dbh == null){
+      $this->dbh = new PDO('sqlite::memory:');
+      //$pdo = new PDO('sqlite:./sqlite3/wines.sqlite3');
+      $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->dbh->exec("CREATE TABLE IF NOT EXISTS wines (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        title TEXT, 
+        grapes TEXT, 
+        price INTEGER,
+        country TEXT,
+        region TEXT,
+        year TEXT,
+        note TEXT
+      )");
+      $wines = array(
+        array('title' => 'Hello!',
+        'grapes' => 'Just testing',
+        'price' => 100,
+        'country' => 'Australia',
+        'region' => 'Victoria',
+        'year' => '2010',
+        'note' => 'Note'),
+      );
 
-    $insert = "INSERT INTO wines (title, grapes, price, country, region, year, note) 
-      VALUES (:title, :grapes, :price,  :country, :region, :year, :note)";
-    $stmt = $pdo->prepare($insert);
-    $stmt->bindParam(':title', $title);
-    $stmt->bindParam(':grapes', $grapes);
-    $stmt->bindParam(':price', $price);
-    $stmt->bindParam(':country', $country); 
-    $stmt->bindParam(':region', $region); 
-    $stmt->bindParam(':year', $year); 
-    $stmt->bindParam(':note', $note); 
+      $insert = "INSERT INTO wines (title, grapes, price, country, region, year, note) 
+        VALUES (:title, :grapes, :price,  :country, :region, :year, :note)";
+      $stmt = $this->dbh->prepare($insert);
+      $stmt->bindParam(':title', $title);
+      $stmt->bindParam(':grapes', $grapes);
+      $stmt->bindParam(':price', $price);
+      $stmt->bindParam(':country', $country); 
+      $stmt->bindParam(':region', $region); 
+      $stmt->bindParam(':year', $year); 
+      $stmt->bindParam(':note', $note); 
 
-    foreach ($wines as $m) {
-      $stmt->bindValue(':title', $m['title'], SQLITE3_TEXT);
-      $stmt->bindValue(':grapes', $m['grapes'], SQLITE3_TEXT);
-      $stmt->bindValue(':price', $m['price'], SQLITE3_INTEGER);
-      $stmt->bindValue(':country', $m['country'], SQLITE3_TEXT);
-      $stmt->bindValue(':region', $m['region'], SQLITE3_TEXT);
-      $stmt->bindValue(':year', $m['year'], SQLITE3_TEXT);
-      $stmt->bindValue(':note', $m['note'], SQLITE3_TEXT);
-      $stmt->execute();
+      foreach ($wines as $m) {
+        $stmt->bindValue(':title', $m['title'], SQLITE3_TEXT);
+        $stmt->bindValue(':grapes', $m['grapes'], SQLITE3_TEXT);
+        $stmt->bindValue(':price', $m['price'], SQLITE3_INTEGER);
+        $stmt->bindValue(':country', $m['country'], SQLITE3_TEXT);
+        $stmt->bindValue(':region', $m['region'], SQLITE3_TEXT);
+        $stmt->bindValue(':year', $m['year'], SQLITE3_TEXT);
+        $stmt->bindValue(':note', $m['note'], SQLITE3_TEXT);
+        $stmt->execute();
+      }
     }
-    return $pdo;
+    return $this->dbh;
   }
 
   function listWine() {
     try {
       $sql = "select * from wines";
-      $dbh = $this->getConnection();
-      $stmt = $dbh->query($sql);
+      $local_dbh = $this->getConnection();
+      $stmt = $local_dbh->query($sql);
       $wines = $stmt->fetchAll(PDO::FETCH_OBJ);
-      $dbh = null;
+      $local_dbh = null;
       return $wines;
     } catch (PDOException $e) {
       echo $e->getMessage();

@@ -26,7 +26,7 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
         $mockApplication = $this->getMock('Silex\Application');
         $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
 
-        $actual_json = $wineController->listWine($mockRequest, $mockApplication);
+        $actual_json = $wineController->listWine();
         $this->assertEquals($expected_json, $actual_json);
     }
 
@@ -46,7 +46,7 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
             ->method('get')
             ->will($this->returnValue(1));
 
-        $actual_json = $wineController->getWine($mockRequest, $mockApplication);
+        $actual_json = $wineController->getWine($mockRequest);
         $this->assertEquals($expected_json, $actual_json);
     }
     function testAddWine(){
