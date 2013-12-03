@@ -1,7 +1,7 @@
 <?php
-require_once '../web/WineServicePDO.php';
-require_once '../web/WineController.php';
-require_once '../web/Wine.php';
+require_once './web/WineServicePDO.php';
+require_once './web/WineController.php';
+require_once './web/Wine.php';
 /**
  * Created by PhpStorm.
  * User: roofimon

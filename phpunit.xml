@@ -1,0 +1,14 @@
+<phpunit colors="true">
+  <testsuites>
+    <testsuite name="My Test Suite">
+      <file>./tests/WineServicePDOTest.php</file>
+      <file>./tests/WineControllerUnitTest.php</file>
+      <file>./tests/WineControllerWebTest.php</file>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <log type="coverage-html" target="./tmp/report" charset="UTF-8"
+      yui="true" highlight="false"
+      lowUpperBound="35" highLowerBound="70"/>
+  </logging>
+</phpunit>
