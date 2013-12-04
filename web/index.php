@@ -10,17 +10,19 @@ $app['debug'] = true;
 
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+  'twig.path' => __DIR__.'/views'
+));
+
 $app['wine_service_pdo'] = $app->share(function() {
-    return new WineServicePDO();
+  return new WineServicePDO();
 });
 
 $app['wines.controller'] = $app->share(function() use ($app) {
-    return new WineController($app);
+  return new WineController($app);
 });
 
-$app->get('/', function () use ($app) {
-    return '';
-});
+$app->get('/', 'wines.controller:rootPage'); 
 
 $app->get('/wines', 'wines.controller:listWine');
 

@@ -13,10 +13,15 @@ class WineControllerTest extends WebTestCase{
     include __DIR__.'/../web/index.php';
     return $app;
   }
+  public function testRoot(){
+    $client = $this->createClient();
+    $crawler = $client->request('GET', '/');
+    $this->assertCount(1, $crawler->filter('h1:contains("Geeky API")'));
+  }
 
   // XXX: caution here is web test, real db query.
   public function testListWine() {
-    $client = $this->createClient();
+    $client = static::createClient();
     $crawler = $client->request('GET', '/wines');
 
     $this->assertTrue($client->getResponse()->isOk());
