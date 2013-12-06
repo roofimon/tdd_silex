@@ -1,9 +1,13 @@
-<phpunit colors="true">
+<phpunit
+    colors="true"
+    processIsolation="true"
+>
   <testsuites>
     <testsuite name="My Test Suite">
-      <file>./tests/WineServicePDOTest.php</file>
-      <file>./tests/WineControllerUnitTest.php</file>
-      <file>./tests/WineControllerWebTest.php</file>
+      <directory>./tests</directory>
+      <file>WineServicePDOTest.php</file>
+      <file>WineControllerUnitTest.php</file>
+      <file>WineControllerWebTest.php</file>
     </testsuite>
   </testsuites>
   <logging>

@@ -19,9 +19,9 @@ class WineSQLiteConnectionManager{
 
   function createWineTable(){
     $this->pdo->exec("CREATE TABLE IF NOT EXISTS wines (
-      id INTEGER PRIMARY KEY AUTOINCREMENT, 
-      title TEXT, 
-      grapes TEXT, 
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT,
+      grapes TEXT,
       price INTEGER,
       country TEXT,
       region TEXT,
@@ -40,16 +40,16 @@ class WineSQLiteConnectionManager{
       'year' => '2010',
       'note' => 'Note'),
     );
-    $insert = "INSERT INTO wines (title, grapes, price, country, region, year, note) 
+    $insert = "INSERT INTO wines (title, grapes, price, country, region, year, note)
       VALUES (:title, :grapes, :price,  :country, :region, :year, :note)";
     $stmt = $this->pdo->prepare($insert);
     $stmt->bindParam(':title', $title);
     $stmt->bindParam(':grapes', $grapes);
     $stmt->bindParam(':price', $price);
-    $stmt->bindParam(':country', $country); 
-    $stmt->bindParam(':region', $region); 
-    $stmt->bindParam(':year', $year); 
-    $stmt->bindParam(':note', $note); 
+    $stmt->bindParam(':country', $country);
+    $stmt->bindParam(':region', $region);
+    $stmt->bindParam(':year', $year);
+    $stmt->bindParam(':note', $note);
 
     foreach ($wines as $m) {
       $stmt->bindValue(':title', $m['title'], SQLITE3_TEXT);
