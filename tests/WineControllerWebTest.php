@@ -20,6 +20,7 @@ class WineControllerTest extends WebTestCase{
   }
 
   // XXX: caution here is web test, real db query.
+
   public function testListWine() {
     $client = static::createClient();
     $crawler = $client->request('GET', '/wines');
@@ -51,4 +52,5 @@ class WineControllerTest extends WebTestCase{
     $actual_json =  $client->getResponse()->getContent();
     $this->assertEquals($expected_json, $actual_json);
   }
+
 }

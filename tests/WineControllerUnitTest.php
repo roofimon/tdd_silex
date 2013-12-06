@@ -13,10 +13,13 @@ use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
+
   function testListWine(){
     $expected_json = '[{"id":1,"title":"wine a"},{"id":2,"title":"some wine"}]';
 
-    $mockServicePDO = $this->getMock('WineServicePDO', ['listWine']);
+    $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['listWine'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
     $mockServicePDO->expects($this->once())
       ->method('listWine')
       ->will($this->returnValue([['id'=>1, 'title'=>'wine a'], ['id'=>2, 'title'=>'some wine']]));
@@ -24,8 +27,6 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
     $appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'');
     $wineController =  new WineController($appMock);
 
-    $mockApplication = $this->getMock('Silex\Application');
-    $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
 
     $actual_json = $wineController->listWine();
     $this->assertEquals($expected_json, $actual_json);
@@ -33,7 +34,9 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
 
   function testGetWine(){
     $expected_json = '{"id":1,"title":"target"}';
-    $mockServicePDO = $this->getMock('WineServicePDO', ['getWine']);
+    $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['getWine'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
     $mockServicePDO->expects($this->once())
       ->method('getWine')
       ->will($this->returnValue(['id'=>1, 'title'=>'target']));
@@ -50,8 +53,11 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
     $actual_json = $wineController->getWine($mockRequest);
     $this->assertEquals($expected_json, $actual_json);
   }
+  
   function testAddWine(){
-    $mockServicePDO = $this->getMock('WineServicePDO', ['addWine']);
+    $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['addWine'])
+                           ->disableOriginalConstructor()
+                           ->getMock();
     $mockServicePDO->expects($this->once())
       ->method('addWine')
       ->will($this->returnValue(new Wine(['title'=>'new wine'])));
@@ -80,4 +86,5 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
 
     $wineController->rootPage();
   }
+ 
 }

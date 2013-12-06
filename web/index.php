@@ -2,6 +2,8 @@
 require_once __DIR__.'/../vendor/autoload.php';
 require_once 'WineServicePDO.php';
 require_once 'WineController.php';
+require_once 'WineSQLiteConnectionManager.php';
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,8 +16,12 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
   'twig.path' => __DIR__.'/views'
 ));
 
-$app['wine_service_pdo'] = $app->share(function() {
-  return new WineServicePDO();
+$app['wine_service_pdo'] = $app->share(function() use ($app) {
+  return new WineServicePDO($app);
+});
+
+$app['wine_sqlite_connection_manager'] = $app->share(function() {
+  return new WineSQLiteConnectionManager();
 });
 
 $app['wines.controller'] = $app->share(function() use ($app) {

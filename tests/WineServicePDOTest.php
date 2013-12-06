@@ -11,9 +11,11 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     $mockPDO = $this->getMock('MockPDO', ['query']);
     $mockPDO->expects($this->once())->method('query')->will($this->returnValue($mockStatement));
 
-    $wineAPI = new WineServicePDO();
-    $wineAPI->setPDO($mockPDO);
+    $mockConnectionManager = $this->getMock('WineSQLiteConnectionManager', ['getConnection']);
+    $mockConnectionManager->expects($this->once())->method('getConnection')->will($this->returnValue($mockPDO));
 
+    $app = array('wine_sqlite_connection_manager'=>$mockConnectionManager);
+    $wineAPI = new WineServicePDO($app);
     $wineAPI->listWine();
   }
 
@@ -24,8 +26,11 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     $mockPDO = $this->getMock('MockPDO', ['prepare']);
     $mockPDO->expects($this->once())->method('prepare')->will($this->returnValue($mockStatement));
 
-    $wineAPI = new WineServicePDO();
-    $wineAPI->setPDO($mockPDO);
+    $mockConnectionManager = $this->getMock('WineSQLiteConnectionManager', ['getConnection']);
+    $mockConnectionManager->expects($this->once())->method('getConnection')->will($this->returnValue($mockPDO));
+
+    $app = array('wine_sqlite_connection_manager'=>$mockConnectionManager);
+    $wineAPI = new WineServicePDO($app);
 
     $wine = new Wine(['title'=>'new wine']);
     $added_wine = $wineAPI->addWine($wine);
@@ -44,8 +49,11 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     $mockPDO = $this->getMock('MockPDO', ['prepare']);
     $mockPDO->expects($this->once())->method('prepare')->will($this->returnValue($mockStatement));
 
-    $wineAPI = new WineServicePDO();
-    $wineAPI->setPDO($mockPDO);
+    $mockConnectionManager = $this->getMock('WineSQLiteConnectionManager', ['getConnection']);
+    $mockConnectionManager->expects($this->once())->method('getConnection')->will($this->returnValue($mockPDO));
+
+    $app = array('wine_sqlite_connection_manager'=>$mockConnectionManager);
+    $wineAPI = new WineServicePDO($app);
 
     $wineId = 1;
     //act
