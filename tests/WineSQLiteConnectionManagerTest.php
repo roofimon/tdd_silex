@@ -6,7 +6,7 @@ class WineSQLiteConnectionManagerTest extends PHPUnit_Framework_TestCase{
     $mockPDO->expects($this->once())
             ->method('setAttribute');
 
-    $mockStatement = $this->getMock('PDOStatement', array('bindParam'));
+    $mockStatement = $this->getMock('PDOStatement');
     $mockPDO->expects($this->any())
             ->method('prepare')->will($this->returnValue($mockStatement));
 
