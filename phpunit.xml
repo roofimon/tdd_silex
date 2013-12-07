@@ -1,9 +1,7 @@
 <phpunit colors="true">
   <testsuites>
     <testsuite name="My Test Suite">
-      <file>./tests/WineServicePDOTest.php</file>
-      <file>./tests/WineControllerUnitTest.php</file>
-      <file>./tests/WineControllerWebTest.php</file>
+      <directory>tests</directory>
     </testsuite>
   </testsuites>
   <logging>
