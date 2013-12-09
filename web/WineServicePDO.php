@@ -5,8 +5,8 @@ class WineServicePDO {
   private $connectionManager;
 
 
-  function __construct($app){
-    $this->connectionManager = $app['wine_sqlite_connection_manager'];
+  function __construct($connectionManager){
+    $this->connectionManager = $connectionManager;
   }
 
   function setConnectionManager($connectionManager){

@@ -14,8 +14,7 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     $mockConnectionManager = $this->getMock('WineSQLiteConnectionManager', ['getConnection']);
     $mockConnectionManager->expects($this->once())->method('getConnection')->will($this->returnValue($mockPDO));
 
-    $app = array('wine_sqlite_connection_manager'=>$mockConnectionManager);
-    $wineAPI = new WineServicePDO($app);
+    $wineAPI = new WineServicePDO($mockConnectionManager);
     $wineAPI->listWine();
   }
 
@@ -29,8 +28,8 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     $mockConnectionManager = $this->getMock('WineSQLiteConnectionManager', ['getConnection']);
     $mockConnectionManager->expects($this->once())->method('getConnection')->will($this->returnValue($mockPDO));
 
-    $app = array('wine_sqlite_connection_manager'=>$mockConnectionManager);
-    $wineAPI = new WineServicePDO($app);
+
+    $wineAPI = new WineServicePDO($mockConnectionManager);
 
     $wine = new Wine(['title'=>'new wine']);
     $added_wine = $wineAPI->addWine($wine);
@@ -52,8 +51,8 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     $mockConnectionManager = $this->getMock('WineSQLiteConnectionManager', ['getConnection']);
     $mockConnectionManager->expects($this->once())->method('getConnection')->will($this->returnValue($mockPDO));
 
-    $app = array('wine_sqlite_connection_manager'=>$mockConnectionManager);
-    $wineAPI = new WineServicePDO($app);
+
+    $wineAPI = new WineServicePDO($mockConnectionManager);
 
     $wineId = 1;
     //act
@@ -62,5 +61,6 @@ class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
     //assert
     $this->assertEquals(1, $target_wine->getId());
   }
+
 
 }

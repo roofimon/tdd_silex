@@ -17,7 +17,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 $app['wine_service_pdo'] = $app->share(function() use ($app) {
-  return new WineServicePDO($app);
+  $connectionManager = $app['wine_sqlite_connection_manager'];
+  return new WineServicePDO($connectionManager);
 });
 
 $app['wine_sqlite_connection_manager'] = $app->share(function() {
