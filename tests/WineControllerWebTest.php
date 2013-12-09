@@ -19,7 +19,7 @@ class WineControllerTest extends WebTestCase{
     $this->assertCount(1, $crawler->filter('h1:contains("Geeky API")'));
   }
 
-  // XXX: caution here is web test, real db query.
+  
 
   public function testListWine() {
     $client = static::createClient();
@@ -52,5 +52,7 @@ class WineControllerTest extends WebTestCase{
     $actual_json =  $client->getResponse()->getContent();
     $this->assertEquals($expected_json, $actual_json);
   }
+  
+  
 
 }

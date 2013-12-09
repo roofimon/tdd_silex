@@ -24,14 +24,12 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
       ->method('listWine')
       ->will($this->returnValue([['id'=>1, 'title'=>'wine a'], ['id'=>2, 'title'=>'some wine']]));
 
-    $appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'');
-    $wineController =  new WineController($appMock);
-
+    $wineController =  new WineController($mockServicePDO, '');
 
     $actual_json = $wineController->listWine();
     $this->assertEquals($expected_json, $actual_json);
   }
-
+  
   function testGetWine(){
     $expected_json = '{"id":1,"title":"target"}';
     $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['getWine'])
@@ -42,7 +40,7 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
       ->will($this->returnValue(['id'=>1, 'title'=>'target']));
 
     $appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'');
-    $wineController =  new WineController($appMock);
+    $wineController =  new WineController($mockServicePDO, '');
 
     $mockApplication = $this->getMock('Silex\Application');
     $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
@@ -69,8 +67,8 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
       ->method('get')
       ->will($this->returnValue('new wine'));
 
-    $appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'');
-    $wineController =  new WineController($appMock);
+
+    $wineController =  new WineController($mockServicePDO, '');
 
     $result = $wineController->addWine($mockRequest);
     $this->assertEquals('{"success":"true"}', $result);
@@ -82,9 +80,8 @@ class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
       ->method('render');
 
     $appMock = array('wine_service_pdo'=>"", 'twig'=>$mockTwigEnvironment);
-    $wineController = new WineController($appMock);
+    $wineController = new WineController('',$mockTwigEnvironment );
 
     $wineController->rootPage();
   }
- 
 }

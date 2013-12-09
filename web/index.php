@@ -26,7 +26,9 @@ $app['wine_sqlite_connection_manager'] = $app->share(function() {
 });
 
 $app['wines.controller'] = $app->share(function() use ($app) {
-  return new WineController($app);
+  $service = $app['wine_service_pdo'];
+  $twig = $app['twig'];
+  return new WineController($service, $twig);
 });
 
 $app->get('/', 'wines.controller:rootPage'); 

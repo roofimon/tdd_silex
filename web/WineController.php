@@ -14,9 +14,9 @@ class WineController {
   private $service;
   private $twigEnvironment;
 
-  public function __construct($app) {
-    $this->service = $app['wine_service_pdo'];
-    $this->twigEnvironment = $app['twig'];
+  public function __construct($service, $twigEnvironment) {
+    $this->service = $service;//$app['wine_service_pdo'];
+    $this->twigEnvironment = $twigEnvironment;//$app['twig'];
   }
 
   public function rootPage(){
