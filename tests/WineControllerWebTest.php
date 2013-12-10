@@ -13,13 +13,12 @@ class WineControllerTest extends WebTestCase{
     include __DIR__.'/../web/index.php';
     return $app;
   }
+
   public function testRoot(){
     $client = $this->createClient();
     $crawler = $client->request('GET', '/');
     $this->assertCount(1, $crawler->filter('h1:contains("Geeky API")'));
   }
-
-  
 
   public function testListWine() {
     $client = static::createClient();
@@ -52,7 +51,7 @@ class WineControllerTest extends WebTestCase{
     $actual_json =  $client->getResponse()->getContent();
     $this->assertEquals($expected_json, $actual_json);
   }
-  
-  
+
+
 
 }
