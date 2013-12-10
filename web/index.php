@@ -31,13 +31,13 @@ $app['wines.controller'] = $app->share(function() use ($app) {
   return new WineController($service, $twig);
 });
 
-$app->get('/', 'wines.controller:rootPage'); 
+$app->get('/', 'wines.controller:rootPage');
 
 $app->get('/wines', 'wines.controller:listWine');
 
 $app->post('/wines', 'wines.controller:addWine');
 
-$app->get('/wines/{id}', 'wines.controller:getWine'); 
+$app->get('/wines/{id}', 'wines.controller:getWine');
 
 $app->run();
 

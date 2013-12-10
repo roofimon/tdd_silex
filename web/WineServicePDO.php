@@ -4,12 +4,7 @@ class WineServicePDO {
   public $dbh;
   private $connectionManager;
 
-
   function __construct($connectionManager){
-    $this->connectionManager = $connectionManager;
-  }
-
-  function setConnectionManager($connectionManager){
     $this->connectionManager = $connectionManager;
   }
 
