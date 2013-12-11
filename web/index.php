@@ -1,11 +1,5 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
-require_once 'WineServicePDO.php';
-require_once 'WineController.php';
-require_once 'WineSQLiteConnectionManager.php';
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -31,6 +25,8 @@ $app['wines.controller'] = $app->share(function() use ($app) {
   return new WineController($service, $twig);
 });
 
+// XXX: this should be responsible of another controller not WineController
+// or we should implement its here. - Roong
 $app->get('/', 'wines.controller:rootPage');
 
 $app->get('/wines', 'wines.controller:listWine');

@@ -1,6 +1,4 @@
 <?php
-require_once './web/WineServicePDO.php';
-require_once './web/Wine.php';
 
 class WineServicePDOTest extends \PHPUnit_Framework_TestCase {
 

@@ -1,6 +1,4 @@
 <?php
-use Silex\WebTestCase;
-use Silex\Application;
 /**
  * Created by PhpStorm.
  * User: roofimon
@@ -8,7 +6,7 @@ use Silex\Application;
  * Time: 3:34 PM
  */
 
-class WineControllerTest extends WebTestCase{
+class WineControllerTest extends Silex\WebTestCase {
   public function createApplication() {
     include __DIR__.'/../web/index.php';
     return $app;
