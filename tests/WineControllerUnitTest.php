@@ -1,18 +1,12 @@
 <?php
-require_once './web/WineServicePDO.php';
-require_once './web/WineController.php';
-require_once './web/Wine.php';
 /**
  * Created by PhpStorm.
  * User: roofimon
  * Date: 11/30/13 AD
  * Time: 6:01 PM
  */
-use Silex\Provider\Twig_Environment;
-use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
-class WineControllerUnitTest extends PHPUnit_Framework_TestCase {
+class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
 
   function testListWine(){
     $expected_json = '[{"id":1,"title":"wine a"},{"id":2,"title":"some wine"}]';
