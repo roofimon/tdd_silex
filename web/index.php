@@ -31,6 +31,8 @@ $app['wines.controller'] = $app->share(function() use ($app) {
   return new WineController($service, $twig);
 });
 
+// XXX: this should be responsible of another controller not WineController
+// or we should implement its here. - Roong
 $app->get('/', 'wines.controller:rootPage');
 
 $app->get('/wines', 'wines.controller:listWine');
