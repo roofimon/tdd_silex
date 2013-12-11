@@ -12,7 +12,6 @@ class WineServicePDO {
     try {
       $sql = "select * from wines";
       $local_dbh = $this->connectionManager->getConnection();
-      echo get_class($local_dbh);
       $stmt = $local_dbh->query($sql);
       $wines = $stmt->fetchAll(PDO::FETCH_OBJ);
       $local_dbh = null;
