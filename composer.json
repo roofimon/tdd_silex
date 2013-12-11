@@ -2,6 +2,7 @@
   "require":{
     "silex/silex": "~1.1",
     "twig/twig": ">=1.8,<2.0-dev",
+	"doctrine/orm": "2.4.*",
     "symfony/twig-bridge": "2.1.2",
     "symfony/css-selector": "2.5.*@dev"
   },
