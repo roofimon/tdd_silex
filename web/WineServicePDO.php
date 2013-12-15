@@ -23,7 +23,7 @@ class WineServicePDO {
   }
 
   function addWine($wine) {
-    $properties = ['title', 'grapes', 'country', 'price'];
+    $properties = array('title', 'grapes', 'country', 'price');
     $prepare_columns = implode(',', $properties);
     $prepare_values = ':' . implode(', :', $properties);
     try {
