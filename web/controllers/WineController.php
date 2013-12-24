@@ -24,28 +24,27 @@ class WineController {
   }
 
   public function listWine() {
-    $results = $this->service->listWine();
-		$status = 200;
-		$headers = array('Content-Type'=>'application/json');			
-		return new JsonResponse($results, $status, $headers);
+    $results = $this->service->listWine();	
+		return $this->jsonWithSuccessStatus($results);
   }
 
   public function getWine(Request $request) {
 		$id = $request->get('id');
 		$result = $this->service->getWine($id);
-		$status = 200;
-		$headers = array('Content-Type'=>'application/json');			
-		return new JsonResponse($result, $status, $headers);
+		return $this->jsonWithSuccessStatus($result);
   }
 
   public function addWine(Request $request) {
     $data = $request->get('title');
     $wine = new Wine(['title' => $data]);
     $this->service->addWine($wine);
-		
-    $result =  array("success"=>true);		
+		$result =  array("success"=>true);		
+		return $this->jsonWithSuccessStatus($result);
+  }
+	
+	function jsonWithSuccessStatus($result) {
 		$status = 200;
 		$headers = array('Content-Type'=>'application/json');			
 		return new JsonResponse($result, $status, $headers);
-  }
+	}
 }
