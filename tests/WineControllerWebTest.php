@@ -35,7 +35,7 @@ class WineControllerTest extends Silex\WebTestCase {
   }
 
   public function testAddWine(){
-    $expected_json = '{"success":"true"}';
+    $expected_json = '{"success":true}';
     $client = $this->createClient();
     $client->request(
       'POST',
