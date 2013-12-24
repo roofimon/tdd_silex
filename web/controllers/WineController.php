@@ -5,16 +5,18 @@
  * Date: 11/30/13 AD
  * Time: 5:56 PM
  */
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class WineController {
-
+	private $app;
   private $service;
   private $twigEnvironment;
 
-  public function __construct($service, $twigEnvironment) {
-    $this->service = $service;//$app['wine_service_pdo'];
-    $this->twigEnvironment = $twigEnvironment;//$app['twig'];
+  public function __construct($app) {
+    $this->service = $app['wine_service_pdo'];
+    $this->twigEnvironment = $app['twig'];
+		$this->app = $app;
   }
 
   public function rootPage(){
@@ -22,8 +24,10 @@ class WineController {
   }
 
   public function listWine() {
-    $result = $this->service->listWine();
-    return json_encode($result);
+    $results = $this->service->listWine();
+		$status = 200;
+		$headers = array('Content-Type'=>'application/json');			
+		return new JsonResponse($results, $status, $headers);
   }
 
   public function getWine(Request $request) {

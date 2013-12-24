@@ -20,9 +20,7 @@ $app['wine_sqlite_connection_manager'] = $app->share(function() {
 });
 
 $app['wines.controller'] = $app->share(function() use ($app) {
-  $service = $app['wine_service_pdo'];
-  $twig = $app['twig'];
-  return new WineController($service, $twig);
+  return new WineController($app);
 });
 
 // XXX: this should be responsible of another controller not WineController

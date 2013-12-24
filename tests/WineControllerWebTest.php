@@ -23,6 +23,13 @@ class WineControllerTest extends Silex\WebTestCase {
     $crawler = $client->request('GET', '/wines');
 
     $this->assertTrue($client->getResponse()->isOk());
+		
+		$this->assertTrue(
+		    $client->getResponse()->headers->contains(
+		        'Content-Type',
+		        'application/json'
+		    )
+		);		
   }
 
   public function testAddWine(){

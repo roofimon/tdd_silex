@@ -5,11 +5,16 @@
  * Date: 11/30/13 AD
  * Time: 6:01 PM
  */
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
 
   function testListWine(){
-    $expected_json = '[{"id":1,"title":"wine a"},{"id":2,"title":"some wine"}]';
+		$expected_json = array(['id'=>1, 'title'=>'wine a'], ['id'=>2, 'title'=>'some wine']);
+		$status = 200;
+		$headers = array('Content-Type'=>'application/json');			
+		$expected = new JsonResponse($expected_json, $status, $headers);
+		
 
     $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['listWine'])
                            ->disableOriginalConstructor()
@@ -18,10 +23,14 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
                    ->method('listWine')
                    ->will($this->returnValue([['id'=>1, 'title'=>'wine a'], ['id'=>2, 'title'=>'some wine']]));
 
-    $wineController =  new WineController($mockServicePDO, '');
+
+		$appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'', 'json' => '');
+		
+		
+		$wineController =  new WineController($appMock);
 
     $actual_json = $wineController->listWine();
-    $this->assertEquals($expected_json, $actual_json);
+    $this->assertEquals($expected, $actual_json);
   }
 
   function testGetWine(){
@@ -33,7 +42,8 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
                    ->method('getWine')
                    ->will($this->returnValue(['id'=>1, 'title'=>'target']));
 
-    $wineController =  new WineController($mockServicePDO, '');
+		$appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'');
+		$wineController =  new WineController($appMock);
 
     $mockRequest = $this->getMock('Symfony\Component\HttpFoundation\Request');
     $mockRequest->expects($this->once())
@@ -58,7 +68,8 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
                 ->method('get')
                 ->will($this->returnValue('new wine'));
 
-    $wineController =  new WineController($mockServicePDO, '');
+		$appMock = array('wine_service_pdo'=>$mockServicePDO, 'twig'=>'');
+		$wineController =  new WineController($appMock);
 
     $result = $wineController->addWine($mockRequest);
     $this->assertEquals('{"success":"true"}', $result);
@@ -70,7 +81,7 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
                         ->method('render');
 
     $appMock = array('wine_service_pdo'=>"", 'twig'=>$mockTwigEnvironment);
-    $wineController = new WineController('',$mockTwigEnvironment );
+		$wineController =  new WineController($appMock);
 
     $wineController->rootPage();
   }
