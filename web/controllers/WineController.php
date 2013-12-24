@@ -31,15 +31,21 @@ class WineController {
   }
 
   public function getWine(Request $request) {
-    $data = $request->get('id');
-    $target_wine = $this->service->getWine($data);
-    return json_encode($target_wine);
+		$id = $request->get('id');
+		$result = $this->service->getWine($id);
+		$status = 200;
+		$headers = array('Content-Type'=>'application/json');			
+		return new JsonResponse($result, $status, $headers);
   }
 
   public function addWine(Request $request) {
     $data = $request->get('title');
     $wine = new Wine(['title' => $data]);
     $this->service->addWine($wine);
-    return '{"success":"true"}';
+		
+    $result =  array("success"=>true);		
+		$status = 200;
+		$headers = array('Content-Type'=>'application/json');			
+		return new JsonResponse($result, $status, $headers);
   }
 }

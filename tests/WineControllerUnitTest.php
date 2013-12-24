@@ -8,8 +8,8 @@
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
-
-  function testListWine(){
+	
+  function testListWine() {
 		$expected_json = array(['id'=>1, 'title'=>'wine a'], ['id'=>2, 'title'=>'some wine']);
 		$status = 200;
 		$headers = array('Content-Type'=>'application/json');			
@@ -33,8 +33,12 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
     $this->assertEquals($expected, $actual_json);
   }
 
-  function testGetWine(){
-    $expected_json = '{"id":1,"title":"target"}';
+  function testGetWine() {
+		$expected_json = array('id'=>1, 'title'=>'target');		
+		$status = 200;
+		$headers = array('Content-Type'=>'application/json');			
+		$expected = new JsonResponse($expected_json, $status, $headers);		
+		
     $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['getWine'])
                            ->disableOriginalConstructor()
                            ->getMock();
@@ -52,10 +56,15 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
                 ->will($this->returnValue(1));
 
     $actual_json = $wineController->getWine($mockRequest);
-    $this->assertEquals($expected_json, $actual_json);
+    $this->assertEquals($expected, $actual_json);
   }
 
   function testAddWine(){
+		$expected_json = array('success'=>true);		
+		$status = 200;
+		$headers = array('Content-Type'=>'application/json');			
+		$expected = new JsonResponse($expected_json, $status, $headers);		
+		
     $mockServicePDO = $this->getMockBuilder('WineServicePDO', ['addWine'])
                            ->disableOriginalConstructor()
                            ->getMock();
@@ -72,7 +81,7 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
 		$wineController =  new WineController($appMock);
 
     $result = $wineController->addWine($mockRequest);
-    $this->assertEquals('{"success":"true"}', $result);
+    $this->assertEquals($expected, $result);
   }
 
   function testRootPage(){
