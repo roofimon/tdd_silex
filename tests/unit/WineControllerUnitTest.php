@@ -56,7 +56,10 @@ class WineControllerUnitTest extends \PHPUnit_Framework_TestCase {
                 ->will($this->returnValue(1));
 
     $actual_json = $wineController->getWine($mockRequest);
-    $this->assertEquals($expected, $actual_json);
+    //$this->assertEquals($expected, $actual_json);
+    //$this->assertContains("title", $actual_json);
+    $this->assertJsonStringEqualsJsonString(json_encode(array("title"=>"target", "id"=>1)), $actual_json->getContent());
+    //echo $actual_json->getContent();
   }
 
   function testAddWine(){
