@@ -6,11 +6,11 @@
  * Time: 3:34 PM
  */
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__.'/../../vendor/autoload.php';
 
 class WineControllerTest extends Silex\WebTestCase {
   public function createApplication() {
-    include __DIR__.'/../web/index.php';
+    include __DIR__.'/../../web/index.php';
     return $app;
   }
 

@@ -3,6 +3,9 @@
     <testsuite name="UnitTest">
       <directory>tests/unit</directory>
     </testsuite>
+    <testsuite name="WebTest">
+      <directory>tests/web</directory>
+    </testsuite>
   </testsuites>
   <logging>
     <log type="coverage-html" target="./tmp/report" charset="UTF-8"
