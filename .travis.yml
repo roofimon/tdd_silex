@@ -5,4 +5,5 @@ before_script:
     - export TZ='UTC'
     - composer self-update
     - composer install
-script: "phpunit --colors"
+script: "phpunit --colors --testsuite UnitTest"
+        "phpunit --colors --testsuite WebTest"
