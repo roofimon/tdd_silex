@@ -1,11 +1,24 @@
 <?php
 class Captcha {
+  private $NUMBER_OPERATOR_TEXT = 1; 
+  private $TEXT_OPERATOR_NUMBER = 2;
+  private $captchaString = array(1=>"One", 2=>"Two");
+
+  public function __construct($pattern, $leftOperand, $operator, $rightOperand) {
+    $this->pattern = $pattern;
+    $this->leftOperand = $leftOperand;
+    $this->operator = $operator;
+    $this->rightOperand = $rightOperand;
+  }
+
   public function getLeftOperand() {
-    return "1";
+    if($this->pattern == $this->TEXT_OPERATOR_NUMBER) return $this->captchaString[$this->leftOperand]; 
+    return $this->leftOperand;
   }
 
   public function getRightOperand() {
-    return "One";
+    if($this->pattern == $this->TEXT_OPERATOR_NUMBER) return $this->rightOperand;
+    return $this->captchaString[$this->rightOperand];
   }
 
   public function getOperation() {
@@ -13,10 +26,10 @@ class Captcha {
   }
 
   public function getResult() {
-    return "2";
+    return $this->leftOperand+$this->rightOperand;
   }
 
   public function toString() {
-    return "1 + One = 2";
+    return $this->getLeftOperand()." + ".$this->getRightOperand()." = ".$this->getResult();
   }
 }
