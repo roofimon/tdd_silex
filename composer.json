@@ -10,7 +10,8 @@
         "phpunit/phpunit": "3.7.*",
         "phpunit/dbunit": ">=1.2",
         "symfony/browser-kit": ">=2.3,<2.4-dev",
-        "mockery/mockery": "0.9.*@dev"
+        "mockery/mockery": "0.9.*@dev",
+        "hamcrest/hamcrest-php": "v1.1.1"
     },
     "autoload": {
         "classmap": ["web/", "web/controllers/", "web/services/", "web/models/"]
