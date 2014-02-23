@@ -5,7 +5,7 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
   public function createTable(PDO $pdo) {
     $query = "
       CREATE TABLE access_log (
-        id number PRIMARY KEY,
+        id number PRIMARY KEY AUTOINCREMENT,
         ip varchar(15) NOT NULL,
         access_time datetime,
         response_time decimal(7,4),
@@ -21,10 +21,17 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
     return $this->createDefaultDBConnection($this->pdo, ':memory:');
   }
 
-  public function testSomething(){
+  public function testCountRow(){
     $accessLogPdo = new AccessLogPDO($this->pdo);
     $result = $accessLogPdo->count();
     assertThat(2, is(equalTo($result)));
+  }
+
+  public function testInsert(){
+    $accessLogPdo = new AccessLogPDO($this->pdo);
+    $actualId = $accessLogPdo->create(['ip'=>"192.168.0.1", "access_time"=>"2010-04-26 12:14:20",
+      "response_time"=>00.0020, "service_url"=>"/api/v3/captcha"]);
+    assertThat(3, is(equalTo($actualId)));
   }
 
   public function getDataSet() {
