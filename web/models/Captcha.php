@@ -22,14 +22,16 @@ class Captcha {
   }
 
   public function getOperator() {
+    if($this->operator == 2) return "*";
     return "+";
   }
 
   public function getResult() {
+    if($this->operator == 2) return $this->leftOperand*$this->rightOperand;
     return $this->leftOperand+$this->rightOperand;
   }
 
   public function toString() {
-    return $this->getLeftOperand()." + ".$this->getRightOperand()." = ".$this->getResult();
+    return $this->getLeftOperand()." ".$this->getOperator()." ".$this->getRightOperand()." = ".$this->getResult();
   }
 }
