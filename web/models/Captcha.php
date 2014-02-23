@@ -2,7 +2,7 @@
 class Captcha {
   private $NUMBER_OPERATOR_TEXT = 1; 
   private $TEXT_OPERATOR_NUMBER = 2;
-  private $captchaString = array(1=>"One", 2=>"Two");
+  private $captchaString = array(1=>"One", 2=>"Two", 3=>"Three", 4=>"Four", 5=>"Five", 6=>"Six", 7=>"Seven", 8=>"Eight", 9=>"Nine");
 
   public function __construct($pattern, $leftOperand, $operator, $rightOperand) {
     $this->pattern = $pattern;
@@ -21,7 +21,7 @@ class Captcha {
     return $this->captchaString[$this->rightOperand];
   }
 
-  public function getOperation() {
+  public function getOperator() {
     return "+";
   }
 
