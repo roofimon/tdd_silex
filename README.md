@@ -1,4 +1,4 @@
-Basic PHP Silex Project
+Basic PHP Silex Project using for Test Driven Development in PHP
 =============
 [![Build Status](https://travis-ci.org/roofimon/tdd_silex.png)](https://travis-ci.org/roofimon/tdd_silex)
 Basic application that mainly focus on "How easy of doing TDD on Silex Framework"
