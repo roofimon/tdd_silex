@@ -1,0 +1,14 @@
+access_log:
+  -
+    id: 1
+    ip: "127.0.0.1"
+    access_time: 2010-04-24 17:15:23
+    response_time: 00.0010
+    service_url: "/api/v5/captcha"
+  -
+    id: 2
+    ip: "127.0.0.2"
+    access_time: 2010-04-24 17:16:23
+    response_time: 00.0010
+    service_url: "/api/v5/captcha"
+
