@@ -33,6 +33,17 @@ class CaptchaUnitTest extends PHPUnit_Framework_TestCase {
     assertThat($captcha->getResult(),       is(equalTo('15')));
   }
 
+  function testFirstPatternNineMultiply9Equals81() {
+    $expected = "9 * Nine = 81";
+    $captcha = new Captcha(1, 9, 2, 9);
+    $actual = $captcha->toString();
+    $this->assertEquals($expected, $actual);
+    assertThat($captcha->getLeftOperand(),  is(equalTo('9')));
+    assertThat($captcha->getOperator(),    is(equalTo('*')));
+    assertThat($captcha->getRightOperand(), is(equalTo('Nine')));
+    assertThat($captcha->getResult(),       is(equalTo('81')));
+  }
+
   function testSecondPatternOnePlus1Equals2() {
     $expected = "One + 1 = 2";
     $captcha = new Captcha(2, 1, 1, 1);
