@@ -4,10 +4,10 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
 
   public function createTable(PDO $pdo) {
     $query = "
-      CREATE TABLE api_logccess_log (
+      CREATE TABLE access_log (
         id number PRIMARY KEY,
         ip varchar(15) NOT NULL,
-        access_date datetime,
+        access_time datetime,
         response_time decimal(7,4),
         service_url varchar(50) NOT NULL DEFAULT 0
       );
