@@ -5,7 +5,7 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
   public function createTable(PDO $pdo) {
     $query = "
       CREATE TABLE access_log (
-        id number PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         ip varchar(15) NOT NULL,
         access_time datetime,
         response_time decimal(7,4),
@@ -16,9 +16,12 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
   }
 
   public function getConnection() {
-    $this->pdo = new PDO('sqlite:memory');
-    $this->createTable($this->pdo);
-    return $this->createDefaultDBConnection($this->pdo, ':memory:');
+    try {
+      $this->pdo = new PDO('sqlite:memory');
+      $this->createTable($this->pdo);
+      return $this->createDefaultDBConnection($this->pdo, ':memory:');
+    }catch(PDOException $e) {
+    }
   }
 
   public function testCountRow(){
