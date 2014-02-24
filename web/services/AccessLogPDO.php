@@ -19,7 +19,11 @@ class AccessLogPDO {
   }
 
   public function count() {
-    return 2;
+    $sql="select count(*) from access_log";
+    $sth = $this->pdo->prepare($sql);
+    $sth->execute();
+    $rows = $sth->fetch(PDO::FETCH_NUM);
+    return $rows[0];
   }
 
   function bindData($statement, $data, $properties) {

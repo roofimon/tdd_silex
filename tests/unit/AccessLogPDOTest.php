@@ -15,10 +15,16 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
     $pdo->query($query);
   }
 
+  public function truncateAutoIncrement(PDO $pdo) {
+    $query = "delete from sqlite_sequence where name='access_log';";
+    $pdo->query($query);
+  }
+
   public function getConnection() {
     try {
       $this->pdo = new PDO('sqlite:memory');
       $this->createTable($this->pdo);
+      $this->truncateAutoIncrement($this->pdo);
       return $this->createDefaultDBConnection($this->pdo, ':memory:');
     }catch(PDOException $e) {
     }
@@ -34,7 +40,7 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
     $accessLogPdo = new AccessLogPDO($this->pdo);
     $actualId = $accessLogPdo->create(['ip'=>"192.168.0.1", "access_time"=>"2010-04-26 12:14:20",
       "response_time"=>00.0020, "service_url"=>"/api/v3/captcha"]);
-    assertThat(3, is(equalTo($actualId)));
+    assertThat($actualId, is(equalTo(3)));
   }
 
   public function getDataSet() {
