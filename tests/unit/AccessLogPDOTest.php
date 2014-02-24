@@ -5,7 +5,7 @@ class AccessLogPDOTest extends PHPUnit_Extensions_Database_TestCase {
   public function createTable(PDO $pdo) {
     $query = "
       CREATE TABLE access_log (
-        id number PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         ip varchar(15) NOT NULL,
         access_time datetime,
         response_time decimal(7,4),
