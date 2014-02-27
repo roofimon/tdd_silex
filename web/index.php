@@ -23,6 +23,12 @@ $app['wines.controller'] = $app->share(function() use ($app) {
   return new WineController($app);
 });
 
+$app['login.controller'] = $app->share(function() use ($app) {
+  return new LoginController($app);
+});
+
+$app->get('/login', 'login.controller:login');
+
 $app->get('/', 'wines.controller:rootPage');
 
 $app->get('/wines', 'wines.controller:listWine');
